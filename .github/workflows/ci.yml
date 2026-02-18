@@ -1,0 +1,24 @@
+name: Mi Primera Pipeline DevOps
+
+# ¿Cuándo se activa? Al hacer push a la rama main
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build-test:
+    # El servidor que GitHub nos presta gratis
+    runs-on: ubuntu-latest
+
+    steps:
+    # Paso 1: El robot descarga tu código del repositorio
+    - name: Bajar código (Checkout)
+      uses: actions/checkout@v3
+
+    # Paso 2: El robot construye la imagen Docker (igual que hiciste tú)
+    - name: Construir Imagen Docker
+      run: docker build -t mi-app-automatica .
+
+    # Paso 3: El robot ejecuta el contenedor para ver si explota
+    - name: Test de arranque
+      run: docker run mi-app-automatica
